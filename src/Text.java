@@ -22,18 +22,46 @@ public class Text {
 			}
 		} else {
 			Scanner s = new Scanner(System.in);
-			render(s.nextLine());
+			System.out.println("Use default configuration? Y/N");
+			if(s.nextLine().equalsIgnoreCase("Y")) {
+				System.out.println("Text to render?");
+				render(s.nextLine());
+			} else {
+				System.out.println("Font name?");
+				String fontName = s.nextLine();
+				System.out.println("Font size?");
+				int fontSize = s.nextInt();
+				s.nextLine();
+				int fontStyle = 0;
+				System.out.println("Bold? Y/N");
+				if(s.nextLine().equalsIgnoreCase("Y")) {
+					fontStyle += Font.BOLD;
+				}
+				System.out.println("Italic? Y/N");
+				if(s.nextLine().equalsIgnoreCase("Y")) {
+					fontStyle = Font.ITALIC;
+				}
+				System.out.println("Number of characters per line?");
+				int charsPerLine = s.nextInt();
+				s.nextLine();
+				System.out.println("Text to render?");
+				String text = s.nextLine();
+				render(text, charsPerLine, new Font(fontName, fontStyle, fontSize));
+			}
+			
 		}
 	}
 	public static final void render(String s) {
 		int length = s.length();
 		int charsPerLine = (int) Math.ceil(Math.sqrt(length));
-		int lines = (int) Math.ceil(((double) length)/charsPerLine);
 		int FONT_SIZE = 160;
 		Font font = new Font("Consolas", Font.BOLD, FONT_SIZE);
-		render(s, charsPerLine, lines, font);
+		render(s, charsPerLine, font);
 	}
-	public static final void render(String s, int charsPerLine, int lines, Font font) {
+	public static final void render(String s, int charsPerLine, Font font) {
+		int length = s.length();
+		int lines = (int) Math.ceil(((double) length)/charsPerLine);
+		
 		int fontSize = font.getSize();
 		int width = fontSize * charsPerLine;
 		int height = fontSize * lines;
@@ -42,7 +70,7 @@ public class Text {
 		g.setFont(font);
 		
 		renderText(g, charsPerLine, lines, s);
-		
+		/*
 		int corruptionLevel = 20;
 		for(int i = 0; i < corruptionLevel; i++) {
 			double magnitude = 3;
@@ -65,6 +93,7 @@ public class Text {
 		}
 		result = scale(result, 1f * width / result.getWidth(), 1f * height / result.getHeight());
 		result = noise(result, 100);
+		*/
 		try {
 			ImageIO.write(result, "png", new File("./" + new Date().getTime() + ".png"));
 		} catch (IOException e) {
@@ -108,7 +137,8 @@ public class Text {
 		drawRandomLine(g, s.substring((lines - 1) * charsPerLine), x, y);
 	}
 	public static final Color[] colors = {
-			Color.BLACK, Color.BLUE, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.YELLOW
+			//Color.BLACK, Color.BLUE, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.YELLOW
+			Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.CYAN, Color.MAGENTA
 	};
 	public static void drawRandomLine(Graphics g, String line, int x, int y) {
 		int size = g.getFont().getSize();
