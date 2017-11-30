@@ -27,6 +27,8 @@ public class Text {
 				System.out.println("Text to render?");
 				render(s.nextLine());
 			} else {
+				System.out.println("Text to render?");
+				String text = s.nextLine();
 				System.out.println("Font name?");
 				String fontName = s.nextLine();
 				System.out.println("Font size?");
@@ -44,8 +46,6 @@ public class Text {
 				System.out.println("Number of characters per line?");
 				int charsPerLine = s.nextInt();
 				s.nextLine();
-				System.out.println("Text to render?");
-				String text = s.nextLine();
 				render(text, charsPerLine, new Font(fontName, fontStyle, fontSize));
 			}
 			
